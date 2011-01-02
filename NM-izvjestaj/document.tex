@@ -39,23 +39,56 @@
 % numerirano, a sa \section*{Ime poglavlja} ako ne želimo da bude numerirano.
 
 \section*{Sažetak}
-Sažetak od stotinjak riječi spominje najvažnije teme koje su obrađene u daljnjem
-tekstu. TODO
+U ovom radu je prikazana metoda raspoznavanja dijela tiskanih slova abecede (od
+A do J) i znaka crtice unutar polja za ispravak odgovora na ispitnim obrascima.
+Opisani su postupci pretprocesiranja slike s ciljem povećanja invarijantnosti na
+veličinu, debljinu, intenzitet linija i poziciju. Pokazano je kako se
+različitim metodama izlučivanja značajki i klasifikacije znatno povećava stupanj
+točnosti klasifikacije. Za klasifikaciju su upotrijebljeni: višeslojni
+perceptron, radijalne neuronske mreže i K-najbližih susjeda. Napravljena je
+procjena sigurnosti u dobivenu klasifikaciju. Izrađeni sustav ima točnost od
+97,45\% bez određivanja sigurnosti klasifikacije i 99,41\% uz 6,92\% nesigurnih
+klasifikacija.
 
 \section{Uvod}
-Klasifikacija
-Uvod sadrži kratki opis područja, zašto je ono važno i koje su primjene. TODO
+Na nekim ispitnim obrascima postoje polja u koje student rukom upisuje željeni
+odgovor u obliku jednog slova engleske abecede (slova od A do J) ili crticu ako
+je odustao od odgovaranja na pitanje. Tema ovog rada bila je osmišljanje i
+implementacija sustava koji prepoznaje napisano slovo. Predviđena je integracija
+s već postojećim sustavom za izradu i očitavanje ispitnih obrazaca. Postojeći
+sustav bi izdvajao sliku kućice s obrasca te ju predao kao ulaz sustavu
+koji bi trebao biti izrađen u okviru ovog projekta. Zbog jednostavnosti
+integracije, izrađeni sustav je potpuno izrađen u programskom jeziku Java.
 
-\section{Opis područja i aktivnosti u svijetu}
-Opis područja je dataljniji prikaz područja uljučujući teoretske osnove i
-primjene. TODO \cite{vamvakasoptical}
+Postojeći sustav već ima mogućnost ručne klasifikacije slova pa je predviđeno
+da se ovim sustavom slovo klasificira ako je to slovo visoke vjerojatnosti. Ako
+klasificirano slovo nije vjerojatno, klasificiranje se prepušta korisniku. S
+obzirom na to da je najveći broj polja, bilo je potrebno vrlo brzo klasificirati
+prazna polja.
+
+Sustav je podijeljen na tri osnovna dijela: pretprocesiranje slike, izlučivanje
+značajki i klasifikaciju. Pretprocesijranje slike je potrebno kako bi slika bila
+u formatu prilagođenom za izlučivanje značajki i invarijantna na veličinu,
+debljinu, intenzitet linija i poziciju slova unutar polja. Izlučivanje značajki
+je postupak kako neku sliku predstaviti jednim vektorom i to tako da što su
+dvije slike sličnije, udaljenost između dobivenih vektora je manja.
+Klasifikacija je postupak strojnog učenja gdje je cilj ulazni vektor pridružiti
+određenoj klasi. Kako bi se povećala točnost sustava, izrađeno je više
+klasifikatora, a svi dobiveni rezultati su integrirani u jedan glavi rezultat.
+Više klasifikatora je postignuto pomoću više različitih metoda izlučivanja
+značajki i klasifikatora. Na Slici \ref{figure:cijeliSustav} su prikazane sve
+komponente sustava uz opisanu podjelu.
 
 \begin{figure*}
 \centering
 \includegraphics[width=\textwidth]{Diagram1.eps}
-\caption{A caption}
-\label{figure:alabel}
+\caption{Prikaz podjele sustava}
+\label{figure:cijeliSustav}
 \end{figure*}
+
+\section{Opis područja i aktivnosti u svijetu}
+Opis područja je dataljniji prikaz područja uljučujući teoretske osnove i
+primjene. TODO \cite{vamvakasoptical}
 
 \section{Pretprocesiranje slike}
 Prije izlučivanja značajki slova, potrebno je izvršiti pretprocesiranje slike.
@@ -95,10 +128,10 @@ skupine se smatraju mrljom i brišu se iz slike.
 
 \subsection{Centriranje i zumiranje slova}
 Ulazne slike je potrebno svesti na jedinstven i normiran oblik. Postupak 
-centriranje slike pronalazi najmanji opisujući pravokutnik piksela slova 
-i translatira ga u sredinu slike. Ovim postupak se osigurava invarijantnost 
+centriranje slike pronalazi najmanji opisujući pravokutnik piksela slova  
+i translatira ga u sredinu slike. Ovim postupak se osigurava invarijantnost
 klasifikatora na translacije ulaznih slika. Postupak zumiranja skalira slova 
-na određene dimenzije. Skaliranjem najmanjeg opisujućeg kvadrata, slovo se 
+na određene dimenzije. Skaliranjem najmanjeg opisujećeg kvadrata, slovo se 
 ne deformira i ne dolazi do gubitka informacija. Ovim postupkom se osigurava 
 invarijantnost klasifikatora na skaliranje ulaznih slika.
 
@@ -129,12 +162,12 @@ analizom glavnih komponenti na 20 dimenzija.
 \subsection{Broj presjecišta}
 
 \subsection{Histogram polovica slike}
-Slično kao i gustoća po dijelovima slike, histogram slike prikazuje odnos 
+Slično kao i gustoća po dijelovima slike, histogram slike prikazuje odnos 
 bijelih i crnih piksela na slici. Horizontalni histogram se računa na način 
-da se za svaki piksel po horizontalnoj komponenti prebroji koliko ima crnih 
+da se za svaki piksel po horizontalnoj komponenti prebroji koliko ima crnih 
 piksela u tom stupcu slike. Vertikalni histogram za svaki piksel po vertikalnoj 
-komponenti, prebrojava koliko ima piksela u tom retku slike. Konkretna 
-procedura izlučivanja značajki se sastoji od pronalaska 4različita histograma: 
+komponenti, prebrojava koliko ima piksela u tom retku slike. Konkretna 
+procedura izlučivanja značajki se sastoji od pronalaska 4 različita histograma: 
 horizontalni histogram gornje polovice slike, horizontalni histogram donje 
 polovice slike, vertikalni histogram lijeve polovice slike, i vertikalni 
 histogram desne polovice slike.
@@ -150,6 +183,7 @@ TODO - napisati, ali uz napomenu da nisu bili zadovoljavajući rezultati
 
 
 \section{Klasifikacija}
+Svi klasifikatori 
 
 \subsection{Prepoznavanje praznih polja}
 
