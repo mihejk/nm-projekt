@@ -136,7 +136,7 @@ ne deformira i ne dolazi do gubitka informacija. Ovim postupkom se osigurava
 invarijantnost klasifikatora na skaliranje ulaznih slika.
 
 \subsection{Stanjivanje linija}
-
+Stanjivanje linija morfološka je operacija kojom se linije slova stanjuju na debljinu jednog piksela. Time se postiže normalizirana debljina linija odnosno, umanjuje se utjecaj stila pisanja na izgled slova. Implementiran algoritam zasnovan je na algoritmu stanjivanja kakvog opisuje R. Wang\cite{Wang2004Online}. Za svaki crni piksel, ispituje se njegovo susjedstvo te određuje da li taj piksel treba ukloniti (obojati u bijelo) ili ne. Postupak se ponavlja dokle god postoje pikseli koji zadovoljavaju uvjet uklanjanja.
 
 \section{Izlučivanje značajki}
 Kako bi klasifikacija bila što preciznija, napravljeno je više različitih načina
