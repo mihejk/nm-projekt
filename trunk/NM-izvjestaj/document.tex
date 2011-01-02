@@ -26,8 +26,6 @@
 \RequirePackage{multirow}
 
 
-
-
 % Ovdje započinje članak.
 \begin{document}
 
@@ -129,7 +127,7 @@ analizom glavnih komponenti na 20 dimenzija.
 Za potrebe računanja značajki radijalnog histograma, slika se promatra kao skup točaka u polarnom koordinatnom sustavu a vrijednosti histograma su količine crnih piksela koji se nalaze pojedinim intervalima kutova. Postupak se sastoji od tri koraka a to su centriranje, određivanja kuta te kvantizacija kuta. Centriranjem se svi pikseli translatiraju tako da se centroid (prosječna pozicija) crnih piksela poklapa s ishodištem koordinatnog sustava. Iz translatiranih koordinata u kartezijevom sustavu, računaju se koordinate u polarnom sustavu, kut u odnosu na apsicu te udaljenost od ishodišta. Kvantizacijom izračunatog kuta određuje se kojem intervalu kutova pojedini smjer pripada.
 
 \subsection{Profil slova}
-Profil slova je broj piksela između opisujućeg pravokutnika (engl. \emph{axis - aligned bounding box}) i ruba, tj. konture slova. Profil vrlo dobro opisuje vanjski oblik slova. Računao se lijevi, desni, gornji i donji profil. Na početku se određuje opisujući pravokutnik (svi pikseli slova su tada unutar pravokutnika). Nakon toga slijedi određivanje broja piksela između opisujućeg pravokutnika i gornjeg, desnog, donjeg i lijevog ruba slova. 
+Profil slova je broj piksela između opisujućeg pravokutnika (engl. \emph{axis-aligned bounding box}) i ruba, tj. konture slova. Profil vrlo dobro opisuje vanjski oblik slova. Računao se lijevi, desni, gornji i donji profil. Na početku se određuje opisujući pravokutnik (svi pikseli slova su tada unutar pravokutnika). Nakon toga slijedi određivanje broja piksela između opisujućeg pravokutnika i gornjeg, desnog, donjeg i lijevog ruba slova. 
 
 \subsection{Hu-ovi invarijantni momenti}
 TODO - napisati, ali uz napomenu da nisu bili zadovoljavajući rezultati
@@ -140,11 +138,36 @@ TODO - napisati, ali uz napomenu da nisu bili zadovoljavajući rezultati
 \subsection{Prepoznavanje praznih polja}
 
 \subsection{Višeslojni perceptron}
+Višeslojni perceptron \cite{rosenblatt1958perceptron} (engl. \emph{multilayer
+perceptron}) je vrsta neuronskih mreža koje imaju jedan ulazni, jedan izlazni i
+jedan ili više skrivenih slojeva
+\begin{equation}
+y_i = \frac{1}{1 + \exp(v_i)}
+\label{equation:sig}
+\end{equation}
+
+Za aktivacijsku funkciju je korištena funkcija \ref{equation:sig} (sigmoidna
+funkcija) gdje je $v_i$ ulaz u aktivacijsku funkciju, a $y_i$ izlaz neurona. U
+svim korištenim klasifikatorima izvedenih pomoću višeslojnog perceptrona broj
+neurona u ulaznom sloju je 20 neurona te je korišten jedan skriveni sloj s 10
+neurona. Treniranje je obavljeno s programskim paketom MATLAB pomoću povratne
+propagacije pogreške \cite{rumelhart1986learning}. Tako istrenirane težine
+neurona se učitavaju pri izradi objekta klasifikatora.
 
 \subsection{Radijalne neuronske mreže}
-Radijalne neuronske mreže sastoje se od tri sloja - ulaznog, skrivenog i izlaznog sloja. U skrivenom se sloju koristi dolje navedena nelinearna skrivena funkcija, dok se u izlaznom sloju koristi linearna funkcija.
-Skrivena funkcija za učenje: 
-$\\exp^{-\left (b \left \| x - x_{i} \right \|  \right )^{2}}$, gdje je b prag. Centri se biraju među uzorcima iz skupa za učenje.       
+Radijalne neuronske mreže sastoje se od tri sloja - ulaznog, skrivenog i
+izlaznog sloja. U skrivenom se sloju koristi dolje navedena nelinearna skrivena
+funkcija, dok se u izlaznom sloju koristi linearna funkcija.
+
+\begin{equation}
+\exp(-\left (b \left \| x - x_{i} \right \|  \right )^{2})
+\label{equation:fZaUcenje}
+\end{equation}
+
+Funkcija \ref{equation:fZaUcenje} je skrivena funkcija za učenje, gdje je b
+prag. Centri se biraju među uzorcima iz skupa za učenje.
+
+
 
 %nije dovršeno 
 
