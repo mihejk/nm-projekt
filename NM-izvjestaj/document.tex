@@ -121,7 +121,7 @@ Rubovi se razlikuju od slike do slike, i nerijetko se preklapaju sa napisanim sl
 Korišteni algoritam je rezultat dosta eksperimentiranja s raznim uzorcima, i
 uzima u obzir profil boje ruba, njegovu sirinu, te razne druge parametre.
 
-Nakon uklanjanja rubova ispituje se je li slika prazna te ako jest, ona više ne
+Nakon binarizacije i uklanjanja rubova ispituje se je li slika prazna (opisano u potpoglavlju Prepoznavanje praznih polja) te ako jest, ona više ne
 sudjeluje u daljnjem pretprocesiranju.
 
 \subsection{Binariziranje slike}
@@ -255,6 +255,7 @@ drugih i ima vlastito sučelje. Jedna metoda prima sliku, a vraća vjerojatnosti
 po znakovima. Druga metoda provjerava može li se vjerovati dobivenom rezultatu.
 
 \subsection{Prepoznavanje praznih polja}
+Za svaku sliku gleda se udio bijelih piksela te ako taj udio prijeđe prag od 0.995, slika se klasificira kao prazna.
 
 \subsection{Višeslojni perceptron}
 Višeslojni perceptron \cite{rosenblatt1958perceptron} (engl. \emph{multilayer
