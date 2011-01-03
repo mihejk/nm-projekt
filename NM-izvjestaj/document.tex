@@ -164,6 +164,9 @@ dijelova (20 horizontalnih i 20 vertikalnih), a dimenzionalnost se smanjuje
 analizom glavnih komponenti na 20 dimenzija.
 
 \subsection{Broj presjecišta}
+Računamo koliko puta horizontalni i vertikalni pravci sijeku napisano slovo.
+Za svaki redak slike krećemo se s lijeva na desno, i brojimo koliko puta slikovni element mijenja boju iz bijele u crnu.
+To napravimo i za svaki stupac. Za sliku 50x50, dobivamo 100 prirodnih brojeva koji dobro odražavaju oblik slova.
 
 \subsection{Histogram polovica slike}
 Slično kao i gustoća po dijelovima slike, histogram slike prikazuje odnos 
@@ -183,7 +186,17 @@ Za potrebe računanja značajki radijalnog histograma, slika se promatra kao sku
 Profil slova je broj piksela između opisujućeg pravokutnika (engl. \emph{axis-aligned bounding box}) i ruba, tj. konture slova. Profil vrlo dobro opisuje vanjski oblik slova. Računao se lijevi, desni, gornji i donji profil. Na početku se određuje opisujući pravokutnik (svi pikseli slova su tada unutar pravokutnika). Nakon toga slijedi određivanje broja piksela između opisujućeg pravokutnika i gornjeg, desnog, donjeg i lijevog ruba slova. 
 
 \subsection{Hu-ovi invarijantni momenti}
-TODO - napisati, ali uz napomenu da nisu bili zadovoljavajući rezultati
+Neka je S skup svih piksela koji pripadaju slovu, i neka ih ima n.
+Težište slova definiramo kao:
+x sa potezom gore = 1/n (suma x-eva iz S) -- stavi x element od S ispod sume, a u sumu x
+isto tako za y
+
+Sada definiramo centralni moment reda p+q:
+u(p,q) = suma (x,y) element S od (x-x_potez)^p * (y-y_potez^q)
+
+Korištenjem centralnih momenata mogu se izvesti izrazi čija vrijednost ne ovisi o translaciji, rotaciji i veličini promatranog lika.
+Ti izrazi zovu se Hu-ovi invarijantni momenti, i probali smo ih koristiti za izvlačenje značajki slova.
+Algoritam je pokretan i prije i poslije stanjivanja linija, ali rezultati nisu bili zadovoljavajući, pa je izbačen iz konačnog rješenja.
 
 
 \section{Klasifikacija}
