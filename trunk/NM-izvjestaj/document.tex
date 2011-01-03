@@ -61,17 +61,19 @@ koji bi trebao biti izrađen u okviru ovog projekta. Zbog jednostavnosti
 integracije, izrađeni sustav je potpuno izrađen u programskom jeziku Java.
 
 Postojeći sustav već ima mogućnost ručne klasifikacije slova pa je predviđeno
-da se ovim sustavom slovo klasificira ako je to slovo visoke vjerojatnosti. Ako
+da se ovim sustavom slovo klasificira ako je rezultat visoke vjerojatnosti. Ako
 klasificirano slovo nije vjerojatno, klasificiranje se prepušta korisniku. S
-obzirom na to da je najveći broj polja, bilo je potrebno vrlo brzo klasificirati
-prazna polja.
+obzirom na to da je najveći broj polja prazno, bilo ih je potrebno vrlo brzo
+klasificirati.
 
 Sustav je podijeljen na tri osnovna dijela: pretprocesiranje slike, izlučivanje
-značajki i klasifikaciju. Pretprocesijranje slike je potrebno kako bi slika bila
-u formatu prilagođenom za izlučivanje značajki i invarijantna na veličinu,
-debljinu, intenzitet linija i poziciju slova unutar polja. Izlučivanje značajki
-je postupak kako neku sliku predstaviti jednim vektorom i to tako da što su
-dvije slike sličnije, udaljenost između dobivenih vektora je manja.
+značajki i klasifikaciju. Dio ideja je dobiven iz \cite{vamvakasoptical}.
+Pretprocesiranje slike je potrebno kako bi slika bila u formatu prilagođenom za
+izlučivanje značajki i invarijantna na veličinu, debljinu, intenzitet linija i
+poziciju slova unutar polja. Izlučivanje značajki je postupak kako neku sliku
+predstaviti jednim vektorom i to tako da što su dvije slike sličnije, udaljenost
+između dobivenih vektora je manja.
+
 Klasifikacija je postupak strojnog učenja gdje je cilj ulazni vektor pridružiti
 određenoj klasi. Kako bi se povećala točnost sustava, izrađeno je više
 klasifikatora, a svi dobiveni rezultati su integrirani u jedan glavi rezultat.
@@ -100,10 +102,6 @@ direktorija, i grafički prikazuje rezultate.
 \label{figure:cijeliSustav}
 \end{figure*}
 
-\section{Opis područja i aktivnosti u svijetu}
-Opis područja je dataljniji prikaz područja uljučujući teoretske osnove i
-primjene. TODO \cite{vamvakasoptical}
-
 \section{Pretprocesiranje slike}
 Prije izlučivanja značajki slova, potrebno je izvršiti pretprocesiranje slike.
 Pretprocesiranje se sastoji od više koraka: binarizacije, uklanjanja rubova,
@@ -114,24 +112,24 @@ polju, za precizno i kvalitetno izlučivanje značajki je potrebno svesti sva
 slova na istu veličinu, debljinu i poziciju. Dobivene slike su identičnih
 veličina (korištena je veličina 50x50), a slova su raširena preko cijele slike.
 
-\subsection{Uklanjanje rubova}
-Sličice skenirane iz obrazaca imaju u sebi i dio tamnih linija koje omeđuju
-prostor za unos slova. Ove linije smetaju daljnjoj obradi, pa ih je potrebno ukloniti.
-Rubovi se razlikuju od slike do slike, i nerijetko se preklapaju sa napisanim slovom.
-Korišteni algoritam je rezultat dosta eksperimentiranja s raznim uzorcima, i
-uzima u obzir profil boje ruba, njegovu sirinu, te razne druge parametre.
-
-Nakon binarizacije i uklanjanja rubova ispituje se je li slika prazna (opisano u potpoglavlju Prepoznavanje praznih polja) te ako jest, ona više ne
-sudjeluje u daljnjem pretprocesiranju.
-
 \subsection{Binariziranje slike}
 Binariziranje slike pronalazi granični intenzitet (threshold), i onda sve
 svijetlije slikovne elemente postavlja u bijelu boju, a sve tamnije u crnu.
 Granični intenzitet je odabran tako da bar pola slike bude bijelo.
 
+\subsection{Uklanjanje rubova}
+Sličice skenirane iz obrazaca imaju u sebi i dio tamnih linija koje omeđuju
+prostor za unos slova. Ove linije smetaju daljnjoj obradi, pa ih je potrebno ukloniti.
+Rubovi se razlikuju od slike do slike, i nerijetko se preklapaju sa napisanim slovom.
+Korišteni algoritam je rezultat dosta eksperimentiranja s raznim uzorcima, i
+uzima u obzir profil boje ruba, njegovu širinu, te razne druge parametre.
+
+Nakon binarizacije i uklanjanja rubova ispituje se je li slika prazna (opisano u potpoglavlju Prepoznavanje praznih polja) te ako jest, ona više ne
+sudjeluje u daljnjem pretprocesiranju.
+
 \subsection{Uklanjanje šuma i mrlja}
-Uklanjanje šuma je izvedeno prema postupku koji su opisali K.\ Chinnasarn et.\
-al.\ \cite{chinnasarn2002removing} čime se u jednom prolazu znatno smanjuju
+Uklanjanje šuma je izvedeno prema postupku koji su opisali K.\ Chinnasarn i
+ostali \cite{chinnasarn2002removing} čime se u jednom prolazu znatno smanjuju
 manje skupine crnih piksela na bijeloj, bijelih piksela na crnoj podlozi i
 rubovi slova se zaglađuju. Postupak je primijenjen s parametrom $k = 5$.
 Primijećeno je da se u rijetkim slučajevima pojavljuju artefakti, ali nisu imali
@@ -141,7 +139,7 @@ slova.
 
 Ponekad i nakon uklanjanja šumova ostaju razne skupine piksela koje nisu dio
 slova. Drugi dio ovog filtra uklanja upravo takve mrlje (točke, crtice i slične
-oblike koje su udaljene od slova). Prvi korak algoritma je prepoznavanje
+oblike koji su udaljeni od slova). Prvi korak algoritma je prepoznavanje
 povezanih skupina piksela. Zatim se za najveću skupinu smatra da je glavni dio
 slova. Nakon toga se gledaju udaljenosti između različitih skupina. Veće i
 bliže skupine dijelovima slova smatraju se novim dijelom slova, a manje i dalje
@@ -172,19 +170,19 @@ korištenjem različitih metoda rezultati klasifikacije mogu biti znatno bolji
 nego korištenjem samo jedne metode klasifikacije.
 
 Većina korištenih metoda izlučivanja značajki vraća vrijednosti iz
-visokodimenzionalnog prostora s kojim bi klasifikacija bila manje kvalitete i
-brzine. Zbog toga se koristi jedna od najčešćih metoda smanjivanja
+visokodimenzionalnog prostora s kojim bi klasifikacija bila manje kvalitetna i
+sporija. Zbog toga se koristi jedna od najčešćih metoda smanjivanja
 dimenzionalnosti pomoću analize glavnih komponenti (engl.\ \emph{principal
 component analysis}).
 
 \subsection{Gustoća po dijelovima slike}
 Izlučivanje značajki iz gustoće po dijelovima slike je najjednostavnija metoda
 izlučivanja značajki. Slika se horizontalno i vertikalno dijeli na jednake
-dijelove, a svaki dio se predstavlja odnos broja crnih i bijelih piksela realnim
-brojem od 0 do 1. Broj 0 predstavlja da u tom dijelu nema crnih piksela, a 1
-predstavlja da nema bijelih piksela. U klasifikaciji je podjela izvedena na 400
-dijelova (20 horizontalnih i 20 vertikalnih), a dimenzionalnost se smanjuje
-analizom glavnih komponenti na 20 dimenzija.
+dijelove, a svakom dijelu se pridružuje realni broj od 0 do 1 koji predstavlja
+odnos broja crnih i bijelih piksela. Broj 0 predstavlja da u tom dijelu nema
+crnih piksela, a 1 predstavlja da nema bijelih piksela. U klasifikaciji je
+podjela izvedena na 400 dijelova (20 horizontalnih i 20 vertikalnih), a
+dimenzionalnost se smanjuje analizom glavnih komponenti na 20 dimenzija.
 
 \subsection{Broj presjecišta}
 Računamo koliko puta horizontalni i vertikalni pravci sijeku napisano slovo.
@@ -200,7 +198,7 @@ piksela u tom stupcu slike. Vertikalni histogram za svaki piksel po vertikalnoj
 komponenti, prebrojava koliko ima piksela u tom retku slike. Konkretna 
 procedura izlučivanja značajki se sastoji od pronalaska 4 različita histograma: 
 horizontalni histogram gornje polovice slike, horizontalni histogram donje 
-polovice slike, vertikalni histogram lijeve polovice slike, i vertikalni 
+polovice slike, vertikalni histogram lijeve polovice slike i vertikalni 
 histogram desne polovice slike.
 
 \subsection{Radijalni histogram}
@@ -211,7 +209,7 @@ od tri koraka a to su centriranje, određivanja kuta te kvantizacija kuta.
 Centriranjem se svi pikseli translatiraju tako da se centroid (prosječna
 pozicija) crnih piksela poklapa s ishodištem koordinatnog sustava. Iz
 translatiranih koordinata u kartezijevom sustavu, računaju se koordinate u
-polarnom sustavu, kut u odnosu na apsicu te udaljenost od ishodišta.
+polarnom sustavu, kut u odnosu na apscisu te udaljenost od ishodišta.
 Kvantizacijom izračunatog kuta određuje se kojem intervalu kutova pojedini smjer
 pripada.
 
@@ -223,7 +221,7 @@ početku se određuje opisujući pravokutnik (svi pikseli slova su tada unutar
 pravokutnika). Nakon toga slijedi određivanje broja piksela između opisujućeg
 pravokutnika i gornjeg, desnog, donjeg i lijevog ruba slova.
 
-\subsection{Hu-ovi invarijantni momenti}
+\subsection{Huovi invarijantni momenti}
 Neka je S skup svih piksela koji pripadaju slovu, i neka ih ima n.
 Težište slova definiramo kao u \ref{equation:hu1}.
 \begin{equation}
@@ -234,13 +232,13 @@ Težište slova definiramo kao u \ref{equation:hu1}.
 
 Sada definiramo centralni moment reda p+q preko \ref{equation:hu2}.
 \begin{equation}
-u(p,q) = \displaystyle\sum_{(x,y) \in S}(x-\overline{x})^p(y-\overline{y})^p
+u(p,q) = \displaystyle\sum_{(x,y) \in S}(x-\overline{x})^p(y-\overline{y})^q
 \label{equation:hu2}
 \end{equation}
 
 Korištenjem centralnih momenata mogu se izvesti izrazi čija vrijednost ne ovisi
-o translaciji, rotaciji i veličini promatranog lika. Ti izrazi zovu se Hu-ovi
-invarijantni momenti, i probali smo ih koristiti za izvlačenje značajki slova.
+o translaciji, rotaciji i veličini promatranog lika. Ti izrazi zovu se Huovi
+invarijantni momenti i probali smo ih koristiti za izvlačenje značajki slova.
 Algoritam je pokretan i prije i poslije stanjivanja linija, ali rezultati nisu
 bili zadovoljavajući, pa je izbačen iz konačnog rješenja.
 
@@ -295,7 +293,7 @@ neurona, željena pogreška te parametar širine određeni su eksperimentalno).
 Korišteni su različiti parametri za  različite metode izlučivanja značajki
 (parametar širine između 0.6 i 0.8 te različit broj skrivenih neurona, od 250 do
 450). Dobivene vrijednosti težina učitavaju se iz datoteke pri izradi objekta
-klasifikatora. Rezultati su navedeni u šestom poglavlju Rezultati.
+klasifikatora. Rezultati su navedeni u petom poglavlju Rezultati.
 
 \subsection{Rekurzivne mreže}
 Prilikom implementacije pokušalo se izgraditi rekurzivnu mrežu kao klasifikator slova. 
@@ -366,7 +364,7 @@ odnose na skup za testiranje. Zadnji red prikazuje rezultat za zajednicu
 klasifikatora i može se primijetiti kako sinergija svih klasifikatora daje
 znatno bolje rezultate od bilo kojeg pojedinačnog klasifikatora. Iz toga se može
 zaključiti kako su različite metode izlučivanja značajki dovoljno nekorelirane
-pa njihovim kombiniranjem se dolazi do znatno boljih rezultata.
+pa se njihovim kombiniranjem dolazi do znatno boljih rezultata.
 
 \begin{table}[htb]
 \centering
@@ -474,9 +472,9 @@ povisiti udio ispravnih klasifikacija.
 
 
 \section{Zaključak}
-U ovom radu implementirano je nadzirano učenje nad rukom pisanih odgovora na
+U ovom radu implementirano je nadzirano učenje nad rukom pisanim odgovorima na
 ispitnim obrascima. Testirano je šest metoda izlučivanja značajki i četiri
-različitih klasifikatora. Od isprobanih metoda izlučivanja značajki uspješnim
+različita klasifikatora. Od isprobanih metoda izlučivanja značajki uspješnim
 su se pokazali gustoća po dijelovima slike, broj horizontalnih presjecišta,
 histogrami polovica slika, radijalni histogram i profili slova, a samo Huovi
 invarijantni momenti su se pokazali nedovoljno točnim. Od klasifikatora
