@@ -217,7 +217,13 @@ Algoritam je pokretan i prije i poslije stanjivanja linija, ali rezultati nisu b
 
 
 \section{Klasifikacija}
-Svi klasifikatori 
+Svi klasifikatori su izrađeni tako da implementiraju sučelje koje ima tri metode
+- klasifikaciju, učitavanje iz datoteke i pohranu u datoteku. Metoda
+klasifikacije prima niz realnih brojeva koji predstavlja izlučene značajke, a
+vraća polje u kojem su pohranjene vjerojatnosti klasifikacije odgovarajućeg
+znaka. Klasifikator koji predstavlja zajednicu klasifikatora je odvojen od
+drugih i ima vlastito sučelje. Jedna metoda prima sliku, a vraća vjerojatnosti
+po znakovima. Druga metoda provjerava može li se vjerovati dobivenom rezultatu.
 
 \subsection{Prepoznavanje praznih polja}
 
