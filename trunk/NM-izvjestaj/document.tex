@@ -198,12 +198,18 @@ Profil slova je broj piksela između opisujućeg pravokutnika (engl. \emph{axis-
 
 \subsection{Hu-ovi invarijantni momenti}
 Neka je S skup svih piksela koji pripadaju slovu, i neka ih ima n.
-Težište slova definiramo kao:
-x sa potezom gore = 1/n (suma x-eva iz S) -- stavi x element od S ispod sume, a u sumu x
-isto tako za y
+Težište slova definiramo kao u \ref{equation:hu1}.
+\begin{equation}
+\overline{x} = \frac{1}{n}\displaystyle\sum_{x \in S}x
+\label{equation:hu1}
+\end{equation}
 
-Sada definiramo centralni moment reda p+q:
-u(p,q) = suma (x,y) element S od (x-x_potez)^p * (y-y_potez^q)
+Sada definiramo centralni moment reda p+q preko \ref{equation:hu2}.
+\begin{equation}
+u(p,q) = \displaystyle\sum_{x \in S}\sum_{y \in
+S}(x-\overline{x})^p(y-\overline{y})^p
+\label{equation:hu2}
+\end{equation}
 
 Korištenjem centralnih momenata mogu se izvesti izrazi čija vrijednost ne ovisi o translaciji, rotaciji i veličini promatranog lika.
 Ti izrazi zovu se Hu-ovi invarijantni momenti, i probali smo ih koristiti za izvlačenje značajki slova.
@@ -392,25 +398,20 @@ ispitni obrasci imaju definirane odgovore od A do F, što je jedna od najčešć
 korištenog broja odgovora, tada nije potrebno određivati vjerojatnosti slova od
 G do J. U aplikaciji je to izvedeno kao ograničavanje izlazne dimenzionalnosti.
 Prva dimenzija određuje vjerojatnost za prazno polje, druga za crticu, a od
-treće do dvanaeste za slova od A do J. Na Slikama \ref{figure:rezPoDim1} i
-\ref{figure:rezPoDim2} je prikazana točnost klasifikacije po broju dimenzija. Na
-Slici \ref{figure:rezPoDim1} je klasifikacija bez korištenja nesigurnosti, a na
-Slici \ref{figure:rezPoDim2} s korištenjem nesigurnosti. Iz grafa se može
-očitati da ako postoje odgovori od A do F, tada je dimenzionalnost 8, a točnost
-klasifikacije uz korištenje nesigurnosti je 99,72\%.
+treće do dvanaeste za slova od A do J. Na Slici \ref{figure:rezPoDim} je
+prikazana točnost klasifikacije po broju dimenzija. Na gornjoj slici je
+klasifikacija bez korištenja nesigurnosti, a na donjoj slici s korištenjem
+nesigurnosti. Iz grafa se može potvrditi da ako se koriste odgovori od A do F,
+tada je dimenzionalnost 8, a točnost klasifikacije uz korištenje nesigurnosti je
+99,72\%.
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{accByDim1.eps}
-\caption{Točnost klasifikacije po broju dimenzija bez upotrebe nesigurnosti}
-\label{figure:rezPoDim1}
-\end{figure}
-
-\begin{figure}
-\centering
 \includegraphics[scale=0.5]{accByDim2.eps}
-\caption{Točnost klasifikacije po broju dimenzija uz upotrebu nesigurnost}
-\label{figure:rezPoDim2}
+\caption{Točnost klasifikacije po broju dimenzija bez upotrebe nesigurnosti
+(gornja slika) i s upotrebom nesigurnosti (donja slika)}
+\label{figure:rezPoDim}
 \end{figure}
 
 Na Slici \ref{figure:rezPoBrojuKlas} je prikazana točnost klasifikacije prema
@@ -427,8 +428,33 @@ povisiti udio ispravnih klasifikacija.
 
 
 \section{Zaključak}
-Zaključak treba istaknuti i diskutirati najvažnije rezultate iznesene u tekstu
-i sugerirati eventualne buduće trendove. TODO
+U ovom radu implementirano je nadzirano učenje nad rukom pisanih odgovora na
+ispitnim obrascima. Testirano je šest metoda izlučivanja značajki i četiri
+različitih klasifikatora. Od isprobanih metoda izlučivanja značajki uspješnim
+su se pokazali gustoća po dijelovima slike, broj horizontalnih presjecišta,
+histogrami polovica slika, radijalni histogram i profili slova, a samo Huovi
+invarijantni momenti su se pokazali nedovoljno točnim. Od klasifikatora
+najboljim su se pokazale radijalne neuronske mreže, dovoljno dobrim višeslojni
+perceptron i K-najbližih susjeda, a razvoj rekurzivnih mreža je zbog većeg broja
+nestabilnih stanja prekinut. Ipak, sinergijom raznih kombinacija izlučivanja
+značajki i metoda klasifikacije pomoću jednostavnog glasanja ostvarena je
+sinergija klasifikatora. Time se pokazalo da su ovakva izlučivanja značajki
+dovoljno nekorelirana. Pokazano je i kako se analizom glavnih komponenti može
+uspješno smanjiti dimenzionalnost bez većeg gubitka korisnih informacija.
+
+Nastavak rada se treba orijentirati na povećanje točnosti i brzine rada krajnje
+klasifikacije. Povećanje točnosti se najvjerojatnije može postići većim skupom
+uzoraka, dodavanjem novih metoda klasifikacije (primjerice, u ovom radu nije
+korištena jedna od najpopularnijih metoda klasifikacije - stroj s potpornim
+vektorima), dodatnim elementima pretprocesiranja (primjerice, ispravljanje
+nagiba) i naprednijim metodama kombinacije strojno naučenih algoritama. Moguće
+je izraditi više binarnih klasifikatora, a rezultat dobiti preko izlaznog koda s
+ispravljanjem pogreške.
+
+Brzina je zadovoljavajuća za trenutačan problem jer brzo
+prepoznaje prazna polja, a dodatna brzina se može postići optimiziranjem
+postojećih komponenti i drugačijim ujedinjavanjem rezultata klasifikatora
+(primjerice, pomoću boostanja).
 
 % Bibliografija
 \bibliographystyle{amsplain}
