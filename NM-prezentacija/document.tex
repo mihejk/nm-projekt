@@ -49,11 +49,49 @@ Ivana Stokić
   \frametitle{Uvod}
 
   \begin{itemize}
-  \item TODO
+  \item Cilj: raspoznavanje ispravka odgovora na ispitnim obrascima
+	  \begin{itemize}
+	  \item Prazna polja (mora biti brzo)
+	  \item Slova engleske abecede (od A do J)
+	  \item Crtica (odustajanje od odgovora)
+	  \end{itemize}
+  \item Predviđena integracija s postojećim sustavom
+	  \begin{itemize}
+	  \item Programski jezik Java
+	  \item Visoko vjerojatna klasifikacija - automatska primjena, manje vjerojatna
+	  klasifikacija - ručna provjera
+	  \end{itemize}
   \end{itemize}
 }
 
 \section[Koraci klasifikacije]{Koraci klasifikacije}
+
+\frame{
+  \begin{itemize}
+  \item Pretprocesiranje slike
+	\begin{itemize}
+	\item Binariziranje slike
+	\item Uklanjanje rubova
+	\item Uklanjanje šuma i mrlja
+	\item Zumiranje slova
+	\item Stanjivanje linija
+	\end{itemize}
+  \item Izlučivanje značajki
+    \begin{itemize}
+	\item Gustoća po dijelovima slike
+	\item Broj presjecišta
+	\item Histogram polovica slike
+	\item Radijalni histogram
+	\item Profil slova
+	\end{itemize}
+  \item Klasifikacija
+    \begin{itemize}
+	\item Višeslojni perceptron
+	\item Radijalne neuronske mreže
+	\item K-najbližih susjeda
+	\end{itemize}
+  \end{itemize} 
+}
 
 \subsection[Pretprocesiranje]{Pretprocesiranje slike}
 
@@ -77,8 +115,12 @@ Ivana Stokić
   \begin{itemize}
   \item Uklanjanje šuma
 	  \begin{itemize}
-	  \item U jednom prolazu se rubovi slova zagladuju, znatno smanjuju manje
-	  skupine crnih piksela na bijeloj podlozi i obrnuto
+	  \item U jednom prolazu
+	  \item Rezultat
+		  \begin{itemize}
+		  \item Briše većinu skupina crnih piksela na bijeloj podlozi i obrnuto
+		  \item Rubovi slova se zaglađuju
+		  \end{itemize}
 	  \item U rijetkim slučajevima artefakti, ali ne utječu na rezultat
 	  \end{itemize}
   \item Uklanjanje mrlja
@@ -92,10 +134,17 @@ Ivana Stokić
 \frame{
   \begin{itemize}
   \item Zumiranje slova
+	  \begin{itemize}
+	  \item Pronalazi najmanji opisujući pravokutnik piksela slova
+	  \item Translatira ga u sredinu slike
+	  \end{itemize}
   \item Stanjivanje linija
 	  \begin{itemize}
-	  \item Iterativno uklanjanje crnih piksela
-	  \item Normalizacija debljine linija na jedan piksel
+	  \item Morfološka operacija kojom se linije slova stanjuju na debljinu jednog
+	  piksela
+	  \item Svakom crnom pikselu se spituje njegovo susjedstvo i odreduje treba li
+	  ga ukloniti
+	  \item Postupak se ponavlja dokle god postoje takvi pikseli
 	  \end{itemize}
   \end{itemize} 
 }
@@ -115,9 +164,9 @@ Ivana Stokić
     \end{itemize} 
   \item Profil slova
     \begin{itemize}
-    \item Pronađe se najmanji pravokutnik koji omeđuje slovo
-	\item Za svaku točku pravokutnika računa se najmanja udaljenost do slova
-	\item Na taj način opisuje se vanjski oblik slova
+    \item Nađemo najmanji pravokutnik koji omeđuje slovo
+	\item Za svaku točku pravokutnika računamo najmanju udaljenost do slova
+	\item Na taj način opisujemo vanjski oblik slova
     \end{itemize} 
   \end{itemize} 
 }
@@ -134,7 +183,7 @@ Ivana Stokić
     \begin{itemize}
     \item Tražimo broj crnih piksela na polupravcima koji kreću iz središta slova
     \end{itemize} 
-  \item Hu-ovi invarijantni momenti
+  \item Huovi invarijantni momenti
     \begin{itemize}
 	\item Brojevi koji ne ovise o rotaciji, translaciji i veličini objekta
     \item Nije se pokazalo dovoljno dobrim
@@ -147,16 +196,16 @@ Ivana Stokić
 \frame{
   \begin{itemize}
   \item Prepoznavanje praznih polja
-\begin{itemize}
-  \item Nakon binarizacije i uklanjanja rubova
-  \item Udio bijelih piksela, ako je veći od praga (0.995) - slika je prazna
-\end{itemize}	 
-  \end{itemize} 
-}
-
-\frame{
-  \begin{itemize}
+	\begin{itemize}
+	  \item Nakon binarizacije i uklanjanja rubova
+	  \item Udio bijelih piksela, ako je veći od praga (0.995) - slika je prazna
+	\end{itemize}
   \item Višeslojni perceptron
+	\begin{itemize}
+	  \item 10 skrivenih neurona
+	  \item Sigmoidalna funkcija
+	  \item Trenirano pomoću MATLABA
+	\end{itemize}
   \end{itemize} 
 }
 
@@ -168,6 +217,10 @@ Ivana Stokić
     \item Od 250 do 450 neurona u skrivenom sloju
     \end{itemize} 
   \item Zajednica klasifikatora
+    \begin{itemize}
+    \item Jednostavno glasanje
+    \item Skaliranje da suma svih rezultata bude 1
+    \end{itemize} 
   \end{itemize} 
 }
 
@@ -279,7 +332,23 @@ Ivana Stokić
 \frame{
   \frametitle{Zaključak}
   \begin{itemize}
-    \item TODO
+    \item Raznim kombinacijama izlučivanja značajki i metoda klasifikacije
+    pomoću jednostavnog glasanja - visoka točnost
+    \item Navedena izlučivanja značajki dovoljno nekorelirana 
+    \item Budući rad
+	  \begin{itemize}
+	    \item Povećanje točnosti
+		  \begin{itemize}
+		    \item Veći skup uzoraka
+		    \item Novi klasifikatori (npr. SVN)
+		    \item Novi elementi pretprocesiranja (npr. ispravljanje nagiba)
+		  \end{itemize}
+	    \item Povećanje brzine
+		  \begin{itemize}
+		    \item Optimiziranje postojećih komponenti
+		    \item Brže ujedinjavanje rezultata klasifikatora (npr. boostanje)  
+		  \end{itemize}
+	  \end{itemize}
   \end{itemize}
 }
 
@@ -291,15 +360,22 @@ Ivana Stokić
   \begin{thebibliography}{10}
     
   \bibitem{knuth:texbook}
-    Donald~E.~Knuth
-    \newblock {\em The \TeX book}
-    \newblock Addison-Wesley, Reading, Massachusetts, 1994.
+    G. Vamvakas
+    \newblock {Optical Character Recognition for Handwritten Characters:
+    National Center for Scientific Research}
+    \newblock \texttt{Demokritos Athens-Greece, Institute of Informatics and
+    Telecommunications and CIL}
 
   \beamertemplatearticlebibitems
   \bibitem{harisimic:latexsistem}
-    V.~Hari i D.~Šimić
-    \newblock {\em \LaTeX: Sistem za pripremu dokumenata}
-    \newblock \texttt{http://www.math.hr/\textasciitilde hari/skr.dvi}
+    K. Chinnasarn, Y. Rangsanseri i P. Thitimajshima
+    \newblock {Removing salt-and-pepper noise in text/graphics images}
+    \newblock \texttt{IEEE APCCAS 1998, IEEE Asia-Pacific Conference}
+  
+  \beamertemplatearticlebibitems
+  \bibitem{harisimic:latexsistem}
+    Ruye Wang
+    \newblock {A thinning algorithm}
   \end{thebibliography}
 }
 
