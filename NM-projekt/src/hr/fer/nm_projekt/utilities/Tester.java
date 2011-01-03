@@ -58,7 +58,6 @@ public class Tester extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static String folderName = "data";
 	private static final int dimensions = 12;
-	private final static double minimumRatio = 2;  
 	
 	private List<ImageTransformer> transformers;
 
@@ -251,7 +250,7 @@ public class Tester extends JFrame {
 					
 					++categoryCount[max];
 					
-					if( ratio < minimumRatio ) msgs.setBackground( new Color( 0, 255, 255 ) );
+					if( !classifier.isReliable( output ) ) msgs.setBackground( new Color( 0, 255, 255 ) );
 					else if( !root.getName().equals( Category.toString(max) ) ) msgs.setBackground( new Color( 255, 0, 0 ) );							
 
 					if( ratio > 10 ) ++goodness[goodnessResolution-1];
@@ -316,9 +315,7 @@ public class Tester extends JFrame {
 						double output[] = classifier.classify(img, dimensions );
 						for( int j = 0; j < dimensions; ++j ) results[i/2][j] += output[j];
 						
-						double ratio = ClassifyUtils.getTwoBestRatio(output);
-						
-						if( ratio < minimumRatio ) ++none[i/2];
+						if( !classifier.isReliable( output ) ) ++none[i/2];
 						else {
 							if( ClassifyUtils.getMaxIndex(output) == i/2 ) ++correct;
 							else ++wrong[i/2];
