@@ -1,22 +1,15 @@
 \documentclass[a4paper,twocolumn,dvipdfm]{article}
 
-% Učitaj pakete za kodnu stranicu utf8 i hrvatski jezik.
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[croatian]{babel}
 
-% Paket za hrvatski jezik neispravno izostavlja točke iza naslova,
-% to ispravljamo zadavanjem novih funkcija za numeriranje koje stavljaju
-% točku.
 \makeatletter
 \renewcommand\thesection{\@arabic\c@section.}
 \renewcommand\thesubsection{\thesection\@arabic\c@subsection.}
 \renewcommand\thesubsubsection{\thesubsection\@arabic\c@subsubsection.}
 \renewcommand\theequation{\@arabic\c@equation}
-%\renewcommand\thefigure{\@arabic\c@figure.}
-%\renewcommand\thetable{\@arabic\c@table.}
 \makeatother
 
-% Ostali korisni paketi.
 \RequirePackage{graphicx}
 \RequirePackage[unicode]{hyperref}
 \RequirePackage{amssymb}
@@ -25,18 +18,11 @@
 \RequirePackage{booktabs}
 \RequirePackage{multirow}
 
-
-% Ovdje započinje članak.
 \begin{document}
 
-% Navedite naslov i autore. Datume se automatski postavlja na datum kreiranja dokumenta,
-% no može se promijeniti zadavanjem \date{30. veljače, 2004.}
 \title{Raspoznavanje rukom pisanih slova na ispitnim obrascima} 
 \author{Tomislav Grbin, Mihej Komar, Ivan Kravarščan, Toni Pivčević i Ivana Stokić}
 \maketitle
-
-% Svako poglavlje započinje sa \section{Ime poglavlja} ako želimo da bude
-% numerirano, a sa \section*{Ime poglavlja} ako ne želimo da bude numerirano.
 
 \section*{Sažetak}
 U ovom radu je prikazana metoda raspoznavanja dijela tiskanih slova abecede (od
@@ -113,19 +99,21 @@ slova na istu veličinu, debljinu i poziciju. Dobivene slike su identičnih
 veličina (korištena je veličina 50x50), a slova su raširena preko cijele slike.
 
 \subsection{Binariziranje slike}
-Binariziranje slike pronalazi granični intenzitet (threshold), i onda sve
-svijetlije slikovne elemente postavlja u bijelu boju, a sve tamnije u crnu.
+Binariziranje slike pronalazi granični intenzitet (engl. \emph{threshold}), i
+onda sve svijetlije slikovne elemente postavlja u bijelu boju, a sve tamnije u crnu.
 Granični intenzitet je odabran tako da bar pola slike bude bijelo.
 
 \subsection{Uklanjanje rubova}
 Sličice skenirane iz obrazaca imaju u sebi i dio tamnih linija koje omeđuju
-prostor za unos slova. Ove linije smetaju daljnjoj obradi, pa ih je potrebno ukloniti.
-Rubovi se razlikuju od slike do slike, i nerijetko se preklapaju sa napisanim slovom.
-Korišteni algoritam je rezultat dosta eksperimentiranja s raznim uzorcima, i
-uzima u obzir profil boje ruba, njegovu širinu, te razne druge parametre.
+prostor za unos slova. Ove linije smetaju daljnjoj obradi, pa ih je potrebno
+ukloniti. Rubovi se razlikuju od slike do slike, i nerijetko se preklapaju sa
+napisanim slovom. Korišteni algoritam je rezultat dosta eksperimentiranja s
+raznim uzorcima, i uzima u obzir profil boje ruba, njegovu širinu, te razne
+druge parametre.
 
-Nakon binarizacije i uklanjanja rubova ispituje se je li slika prazna (opisano u potpoglavlju Prepoznavanje praznih polja) te ako jest, ona više ne
-sudjeluje u daljnjem pretprocesiranju.
+Nakon binarizacije i uklanjanja rubova ispituje se je li slika prazna (opisano u
+potpoglavlju Prepoznavanje praznih polja) te ako jest, ona više ne sudjeluje u
+daljnjem pretprocesiranju.
 
 \subsection{Uklanjanje šuma i mrlja}
 Uklanjanje šuma je izvedeno prema postupku koji su opisali K.\ Chinnasarn i
@@ -224,8 +212,10 @@ pravokutnika i gornjeg, desnog, donjeg i lijevog ruba slova.
 \subsection{Huovi invarijantni momenti}
 Neka je S skup svih piksela koji pripadaju slovu, i neka ih ima n.
 Težište slova definiramo kao u \ref{equation:hu1}.
+
 \begin{equation}
 \overline{x} = \frac{1}{n}\displaystyle\sum_{x \in S}x
+\hspace{1cm}
 \overline{y} = \frac{1}{n}\displaystyle\sum_{y \in S}y
 \label{equation:hu1}
 \end{equation}
@@ -253,14 +243,15 @@ drugih i ima vlastito sučelje. Jedna metoda prima sliku, a vraća vjerojatnosti
 po znakovima. Druga metoda provjerava može li se vjerovati dobivenom rezultatu.
 
 \subsection{Prepoznavanje praznih polja}
-Za svaku sliku gleda se udio bijelih piksela te ako taj udio prijeđe prag od 0.995, slika se klasificira kao prazna.
+Za svaku sliku gleda se udio bijelih piksela te ako taj udio prijeđe prag od
+0.995, slika se klasificira kao prazna.
 
 \subsection{Višeslojni perceptron}
 Višeslojni perceptron \cite{rosenblatt1958perceptron} (engl. \emph{multilayer
 perceptron}) je vrsta neuronskih mreža koje imaju jedan ulazni, jedan izlazni i
 jedan ili više skrivenih slojeva
 \begin{equation}
-y_i = \frac{1}{1 + \exp(v_i)}
+y_i = \frac{1}{1 + \exp(-v_i)}
 \label{equation:sig}
 \end{equation}
 
@@ -500,7 +491,6 @@ prepoznaje prazna polja, a dodatna brzina se može postići optimiziranjem
 postojećih komponenti i drugačijim ujedinjavanjem rezultata klasifikatora
 (primjerice, pomoću boostanja).
 
-% Bibliografija
 \bibliographystyle{amsplain}
 \bibliography{literatura}
 
