@@ -234,7 +234,7 @@ neurona se učitavaju pri izradi objekta klasifikatora.
 
 \subsection{Radijalne neuronske mreže}
 Radijalne neuronske mreže sastoje se od tri sloja - ulaznog, skrivenog i
-izlaznog sloja. U skrivenom se sloju koristi dolje navedena nelinearna skrivena
+izlaznog sloja. Kod upotrebe ove vrste mreže, problemi klasifikacije uzoraka rješavaju se nelinearnom transformacijom ulaznih uzoraka u prostor više dimenzije od ulaznog prostora. U skrivenom se sloju koristi nelinearna skrivena
 funkcija, dok se u izlaznom sloju koristi linearna funkcija.
 
 \begin{equation}
@@ -242,12 +242,8 @@ funkcija, dok se u izlaznom sloju koristi linearna funkcija.
 \label{equation:fZaUcenje}
 \end{equation}
 
-Funkcija \ref{equation:fZaUcenje} je skrivena funkcija za učenje, gdje je b
-prag. Centri se biraju među uzorcima iz skupa za učenje.
-
-
-
-%nije dovršeno 
+Za učenje u sklopu ovog projekta korištena je skrivena funkcija \ref{equation:fZaUcenje}. Parametri ove skrivene funkcije su prag b te euklidska udaljenost (norma) između pojedinog ulaznog uzorka i centra. Centri se biraju između uzoraka iz skupa za učenje i fiksni su. Učenje je izvedeno uz pomoć programskog paketa MATLAB. Potrebni parametri (kao što su broj skrivenih neurona, željena pogreška te parametar širine određeni su eksperimentalno). Korišteni su različiti parametri za  različite metode izlučivanja značajki (parametar širine između 0.6 i 0.8 te različit broj skrivenih neurona, od 250 do 450).
+Dobivene vrijednosti težina učitavaju se iz datoteke pri izradi objekta klasifikatora. Rezultati su navedeni u šestom poglavlju Rezultati.  
 
 \subsection{Rekurzivne mreže}
 Prilikom implementacije pokušalo se izgraditi rekurzivnu mrežu kao klasifikator slova. 
