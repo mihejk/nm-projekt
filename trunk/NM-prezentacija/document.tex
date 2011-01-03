@@ -113,6 +113,7 @@ Ivana Stokić
     \begin{itemize}
     \item Nađemo najmanji pravokutnik koji omeđuje slovo
 	\item Za svaku točku pravokutnika računamo najmanju udaljenost do slova
+	\item Na taj način opisujemo vanjski oblik slova
     \end{itemize} 
   \end{itemize} 
 }
@@ -120,9 +121,18 @@ Ivana Stokić
 \frame{
   \begin{itemize}
   \item Histogram polovica slike
+    \begin{itemize}
+    \item Podijelimo sliku na gornji i donji dio
+	\item Za svaki dio promatramo broj crnih piksela u svakom stupcu
+	\item Slično radimo i za lijevu i desnu polovicu
+    \end{itemize} 
   \item Radijalni histogram
+    \begin{itemize}
+    \item Tražimo broj crnih piksela na polupravcima koji kreću iz središta slova
+    \end{itemize} 
   \item Hu-ovi invarijantni momenti
     \begin{itemize}
+	\item Brojevi koji ne ovise o rotaciji, translaciji i veličini objekta
     \item Nije se pokazalo dovoljno dobrim
     \end{itemize} 
   \end{itemize} 
