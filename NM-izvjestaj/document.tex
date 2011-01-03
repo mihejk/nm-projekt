@@ -100,13 +100,17 @@ polju, za precizno i kvalitetno izlučivanje značajki je potrebno svesti sva
 slova na istu veličinu, debljinu i poziciju. Dobivene slike su identičnih
 veličina (korištena je veličina 50x50), a slova su raširena preko cijele slike.
 
-\subsection{Binariziranje slike}
-
 \subsection{Uklanjanje rubova}
-
-%ovdje dolazi uklanjanje rubova
+Sličice skenirane iz obrazaca imaju u sebi i dio tamnih linija koje omeđuju prostor za unos slova.
+Ove linije smetaju daljnjoj obradi, pa ih je potrebno ukloniti.
+Rubovi se razlikuju od slike do slike, i nerijetko se preklapaju sa napisanim slovom.
+Korišteni algoritam je rezultat dosta eksperimentiranja s raznim uzorcima, i uzima u obzir profil boje ruba, njegovu sirinu, te razne druge parametre.
 
 Nakon uklanjanja rubova ispituje se je li slika prazna te ako jest, ona više ne sudjeluje u daljnjem pretprocesiranju.
+
+\subsection{Binariziranje slike}
+Binariziranje slike pronalazi granični intenzitet (threshold), i onda sve svijetlije slikovne elemente postavlja u bijelu boju, a sve tamnije u crnu.
+Granični intenzitet je odabran tako da bar pola slike bude bijelo.
 
 \subsection{Uklanjanje šuma i mrlja}
 Uklanjanje šuma je izvedeno prema postupku koji su opisali K.\ Chinnasarn et.\
