@@ -80,14 +80,17 @@ značajki i klasifikatora. Na Slici \ref{figure:cijeliSustav} su prikazane sve
 komponente sustava uz opisanu podjelu.
 
 Za prikaz rada pretprocesiranja korišteno je jednostavno grafičko sučelje.
-S lijeve strane odabere se direktorij iz kojeg se izvlače sličice. Unutar istog direktorija su sličice za koje bi rezultat klasifikacije trebao biti isti.
-Nakon odabira, s desne strane prikazuju se sve sličice iz odabranog direktorija, kao i rezultati pojedinih faza rada sustava.
-Klikom miša na određenu sličicu, vide se rezultati svake faze pretprocesiranja.
-Pored sličice, vide se rezultati klasifikacije.
-Plavom bojom označavaju se uzorci za koje klasifikator nije siguran kuda pripadaju, a crvenom se označavaju oni za koje je siguran u pogrešnu klasifikaciju.
-Tako se vide mogući problemi u radu.
-Prikazuju se i grafovi iz kojih se za svako slovo vide rezultati klasifikacije svih sličica zajedno.
-Postoji i opcija "run all", koja obrađuje sve sličice iz svih direktorija, i grafički prikazuje rezultate.
+S lijeve strane odabere se direktorij iz kojeg se izvlače sličice. Unutar istog
+direktorija su sličice za koje bi rezultat klasifikacije trebao biti isti.
+Nakon odabira, s desne strane prikazuju se sve sličice iz odabranog direktorija,
+kao i rezultati pojedinih faza rada sustava. Klikom miša na određenu sličicu,
+vide se rezultati svake faze pretprocesiranja. Pored sličice, vide se rezultati
+klasifikacije. Plavom bojom označavaju se uzorci za koje klasifikator nije
+siguran kuda pripadaju, a crvenom se označavaju oni za koje je siguran u
+pogrešnu klasifikaciju. Tako se vide mogući problemi u radu.Prikazuju se i
+grafovi iz kojih se za svako slovo vide rezultati klasifikacije svih sličica
+zajedno. Postoji i opcija "run all", koja obrađuje sve sličice iz svih
+direktorija, i grafički prikazuje rezultate.
 
 
 \begin{figure*}
@@ -112,15 +115,18 @@ slova na istu veličinu, debljinu i poziciju. Dobivene slike su identičnih
 veličina (korištena je veličina 50x50), a slova su raširena preko cijele slike.
 
 \subsection{Uklanjanje rubova}
-Sličice skenirane iz obrazaca imaju u sebi i dio tamnih linija koje omeđuju prostor za unos slova.
-Ove linije smetaju daljnjoj obradi, pa ih je potrebno ukloniti.
+Sličice skenirane iz obrazaca imaju u sebi i dio tamnih linija koje omeđuju
+prostor za unos slova. Ove linije smetaju daljnjoj obradi, pa ih je potrebno ukloniti.
 Rubovi se razlikuju od slike do slike, i nerijetko se preklapaju sa napisanim slovom.
-Korišteni algoritam je rezultat dosta eksperimentiranja s raznim uzorcima, i uzima u obzir profil boje ruba, njegovu sirinu, te razne druge parametre.
+Korišteni algoritam je rezultat dosta eksperimentiranja s raznim uzorcima, i
+uzima u obzir profil boje ruba, njegovu sirinu, te razne druge parametre.
 
-Nakon uklanjanja rubova ispituje se je li slika prazna te ako jest, ona više ne sudjeluje u daljnjem pretprocesiranju.
+Nakon uklanjanja rubova ispituje se je li slika prazna te ako jest, ona više ne
+sudjeluje u daljnjem pretprocesiranju.
 
 \subsection{Binariziranje slike}
-Binariziranje slike pronalazi granični intenzitet (threshold), i onda sve svijetlije slikovne elemente postavlja u bijelu boju, a sve tamnije u crnu.
+Binariziranje slike pronalazi granični intenzitet (threshold), i onda sve
+svijetlije slikovne elemente postavlja u bijelu boju, a sve tamnije u crnu.
 Granični intenzitet je odabran tako da bar pola slike bude bijelo.
 
 \subsection{Uklanjanje šuma i mrlja}
@@ -151,7 +157,13 @@ ne deformira i ne dolazi do gubitka informacija. Ovim postupkom se osigurava
 invarijantnost klasifikatora na skaliranje ulaznih slika.
 
 \subsection{Stanjivanje linija}
-Stanjivanje linija morfološka je operacija kojom se linije slova stanjuju na debljinu jednog piksela. Time se postiže normalizirana debljina linija odnosno, umanjuje se utjecaj stila pisanja na izgled slova. Implementiran algoritam zasnovan je na algoritmu stanjivanja kakvog opisuje R. Wang\cite{Wang2004Online}. Za svaki crni piksel, ispituje se njegovo susjedstvo te određuje da li taj piksel treba ukloniti (obojati u bijelo) ili ne. Postupak se ponavlja dokle god postoje pikseli koji zadovoljavaju uvjet uklanjanja.
+Stanjivanje linija morfološka je operacija kojom se linije slova stanjuju na
+debljinu jednog piksela. Time se postiže normalizirana debljina linija odnosno,
+umanjuje se utjecaj stila pisanja na izgled slova. Implementiran algoritam
+zasnovan je na algoritmu stanjivanja kakvog opisuje R.
+Wang\cite{Wang2004Online}. Za svaki crni piksel, ispituje se njegovo susjedstvo
+te određuje da li taj piksel treba ukloniti (obojati u bijelo) ili ne. Postupak
+se ponavlja dokle god postoje pikseli koji zadovoljavaju uvjet uklanjanja.
 
 \section{Izlučivanje značajki}
 Kako bi klasifikacija bila što preciznija, napravljeno je više različitih načina
@@ -176,8 +188,9 @@ analizom glavnih komponenti na 20 dimenzija.
 
 \subsection{Broj presjecišta}
 Računamo koliko puta horizontalni i vertikalni pravci sijeku napisano slovo.
-Za svaki redak slike krećemo se s lijeva na desno, i brojimo koliko puta slikovni element mijenja boju iz bijele u crnu.
-To napravimo i za svaki stupac. Za sliku 50x50, dobivamo 100 prirodnih brojeva koji dobro odražavaju oblik slova.
+Za svaki redak slike krećemo se s lijeva na desno, i brojimo koliko puta
+slikovni element mijenja boju iz bijele u crnu. To napravimo i za svaki stupac.
+Za sliku 50x50, dobivamo 100 prirodnih brojeva koji dobro odražavaju oblik slova.
 
 \subsection{Histogram polovica slike}
 Slično kao i gustoća po dijelovima slike, histogram slike prikazuje odnos 
@@ -191,10 +204,24 @@ polovice slike, vertikalni histogram lijeve polovice slike, i vertikalni
 histogram desne polovice slike.
 
 \subsection{Radijalni histogram}
-Za potrebe računanja značajki radijalnog histograma, slika se promatra kao skup točaka u polarnom koordinatnom sustavu a vrijednosti histograma su količine crnih piksela koji se nalaze pojedinim intervalima kutova. Postupak se sastoji od tri koraka a to su centriranje, određivanja kuta te kvantizacija kuta. Centriranjem se svi pikseli translatiraju tako da se centroid (prosječna pozicija) crnih piksela poklapa s ishodištem koordinatnog sustava. Iz translatiranih koordinata u kartezijevom sustavu, računaju se koordinate u polarnom sustavu, kut u odnosu na apsicu te udaljenost od ishodišta. Kvantizacijom izračunatog kuta određuje se kojem intervalu kutova pojedini smjer pripada.
+Za potrebe računanja značajki radijalnog histograma, slika se promatra kao skup
+točaka u polarnom koordinatnom sustavu a vrijednosti histograma su količine
+crnih piksela koji se nalaze pojedinim intervalima kutova. Postupak se sastoji
+od tri koraka a to su centriranje, određivanja kuta te kvantizacija kuta.
+Centriranjem se svi pikseli translatiraju tako da se centroid (prosječna
+pozicija) crnih piksela poklapa s ishodištem koordinatnog sustava. Iz
+translatiranih koordinata u kartezijevom sustavu, računaju se koordinate u
+polarnom sustavu, kut u odnosu na apsicu te udaljenost od ishodišta.
+Kvantizacijom izračunatog kuta određuje se kojem intervalu kutova pojedini smjer
+pripada.
 
 \subsection{Profil slova}
-Profil slova je broj piksela između opisujućeg pravokutnika (engl. \emph{axis-aligned bounding box}) i ruba, tj. konture slova. Profil vrlo dobro opisuje vanjski oblik slova. Računao se lijevi, desni, gornji i donji profil. Na početku se određuje opisujući pravokutnik (svi pikseli slova su tada unutar pravokutnika). Nakon toga slijedi određivanje broja piksela između opisujućeg pravokutnika i gornjeg, desnog, donjeg i lijevog ruba slova. 
+Profil slova je broj piksela između opisujućeg pravokutnika (engl.
+\emph{axis-aligned bounding box}) i ruba, tj. konture slova. Profil vrlo dobro
+opisuje vanjski oblik slova. Računao se lijevi, desni, gornji i donji profil. Na
+početku se određuje opisujući pravokutnik (svi pikseli slova su tada unutar
+pravokutnika). Nakon toga slijedi određivanje broja piksela između opisujućeg
+pravokutnika i gornjeg, desnog, donjeg i lijevog ruba slova.
 
 \subsection{Hu-ovi invarijantni momenti}
 Neka je S skup svih piksela koji pripadaju slovu, i neka ih ima n.
@@ -211,9 +238,11 @@ u(p,q) = \displaystyle\sum_{(x,y) \in S}(x-\overline{x})^p(y-\overline{y})^p
 \label{equation:hu2}
 \end{equation}
 
-Korištenjem centralnih momenata mogu se izvesti izrazi čija vrijednost ne ovisi o translaciji, rotaciji i veličini promatranog lika.
-Ti izrazi zovu se Hu-ovi invarijantni momenti, i probali smo ih koristiti za izvlačenje značajki slova.
-Algoritam je pokretan i prije i poslije stanjivanja linija, ali rezultati nisu bili zadovoljavajući, pa je izbačen iz konačnog rješenja.
+Korištenjem centralnih momenata mogu se izvesti izrazi čija vrijednost ne ovisi
+o translaciji, rotaciji i veličini promatranog lika. Ti izrazi zovu se Hu-ovi
+invarijantni momenti, i probali smo ih koristiti za izvlačenje značajki slova.
+Algoritam je pokretan i prije i poslije stanjivanja linija, ali rezultati nisu
+bili zadovoljavajući, pa je izbačen iz konačnog rješenja.
 
 
 \section{Klasifikacija}
@@ -246,7 +275,9 @@ neurona se učitavaju pri izradi objekta klasifikatora.
 
 \subsection{Radijalne neuronske mreže}
 Radijalne neuronske mreže sastoje se od tri sloja - ulaznog, skrivenog i
-izlaznog sloja. Kod upotrebe ove vrste mreže, problemi klasifikacije uzoraka rješavaju se nelinearnom transformacijom ulaznih uzoraka u prostor više dimenzije od ulaznog prostora. U skrivenom se sloju koristi nelinearna skrivena
+izlaznog sloja. Kod upotrebe ove vrste mreže, problemi klasifikacije uzoraka
+rješavaju se nelinearnom transformacijom ulaznih uzoraka u prostor više
+dimenzije od ulaznog prostora. U skrivenom se sloju koristi nelinearna skrivena
 funkcija, dok se u izlaznom sloju koristi linearna funkcija.
 
 \begin{equation}
@@ -254,8 +285,16 @@ funkcija, dok se u izlaznom sloju koristi linearna funkcija.
 \label{equation:fZaUcenje}
 \end{equation}
 
-Za učenje u sklopu ovog projekta korištena je skrivena funkcija \ref{equation:fZaUcenje}. Parametri ove skrivene funkcije su prag b te euklidska udaljenost (norma) između pojedinog ulaznog uzorka i centra. Centri se biraju između uzoraka iz skupa za učenje i fiksni su. Učenje je izvedeno uz pomoć programskog paketa MATLAB. Potrebni parametri (kao što su broj skrivenih neurona, željena pogreška te parametar širine određeni su eksperimentalno). Korišteni su različiti parametri za  različite metode izlučivanja značajki (parametar širine između 0.6 i 0.8 te različit broj skrivenih neurona, od 250 do 450).
-Dobivene vrijednosti težina učitavaju se iz datoteke pri izradi objekta klasifikatora. Rezultati su navedeni u šestom poglavlju Rezultati.  
+Za učenje u sklopu ovog projekta korištena je skrivena funkcija
+\ref{equation:fZaUcenje}. Parametri ove skrivene funkcije su prag b te euklidska
+udaljenost (norma) između pojedinog ulaznog uzorka i centra. Centri se biraju
+između uzoraka iz skupa za učenje i fiksni su. Učenje je izvedeno uz pomoć
+programskog paketa MATLAB. Potrebni parametri (kao što su broj skrivenih
+neurona, željena pogreška te parametar širine određeni su eksperimentalno).
+Korišteni su različiti parametri za  različite metode izlučivanja značajki
+(parametar širine između 0.6 i 0.8 te različit broj skrivenih neurona, od 250 do
+450). Dobivene vrijednosti težina učitavaju se iz datoteke pri izradi objekta
+klasifikatora. Rezultati su navedeni u šestom poglavlju Rezultati.
 
 \subsection{Rekurzivne mreže}
 Prilikom implementacije pokušalo se izgraditi rekurzivnu mrežu kao klasifikator slova. 
